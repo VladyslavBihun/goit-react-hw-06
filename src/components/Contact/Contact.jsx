@@ -1,9 +1,14 @@
 // Contact.jsx
 import icon from "../../icons/icons.json";
 import css from "./Contact.module.css";
+import { deleteContact } from "../../redux/store";
+import { useDispatch } from "react-redux";
 
-const Contact = ({ name, number }) => {
+const Contact = ({ name, number, id }) => {
   const { user, phone } = icon;
+  const dispatch = useDispatch();
+
+  const handleDelete = () => dispatch(deleteContact(id));
 
   return (
     <div className={css.cardWrapper}>
@@ -17,7 +22,9 @@ const Contact = ({ name, number }) => {
           <p className={css.text}>{number}</p>
         </div>
       </div>
-      <button type="button">Delete</button>
+      <button type="button" onClick={handleDelete}>
+        Delete
+      </button>
     </div>
   );
 };
