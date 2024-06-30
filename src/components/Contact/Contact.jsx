@@ -2,7 +2,7 @@
 import icon from "../../icons/icons.json";
 import css from "./Contact.module.css";
 
-const Contact = ({ name, number, id, onDelete }) => {
+const Contact = ({ name, number }) => {
   const { user, phone } = icon;
 
   return (
@@ -17,9 +17,7 @@ const Contact = ({ name, number, id, onDelete }) => {
           <p className={css.text}>{number}</p>
         </div>
       </div>
-      <button type="button" onClick={() => onDelete(id)}>
-        Delete
-      </button>
+      <button type="button">Delete</button>
     </div>
   );
 };

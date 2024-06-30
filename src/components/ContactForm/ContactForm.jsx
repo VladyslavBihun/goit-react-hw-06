@@ -4,7 +4,6 @@ import { useId } from "react";
 import { Form, Field, Formik } from "formik";
 import { ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { nanoid } from "nanoid";
 import css from "./ContactForm.module.css";
 
 const userSchema = Yup.object().shape({
@@ -23,24 +22,12 @@ const initialValues = {
   phone: "",
 };
 
-const ContactForm = ({ onAdd }) => {
+const ContactForm = () => {
   const nameId = useId();
   const phoneId = useId();
 
-  const handleSubmit = (values, actions) => {
-    onAdd({
-      id: nanoid(),
-      name: values.username,
-      number: values.phone,
-    });
-    actions.resetForm();
-  };
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={userSchema}
-    >
+    <Formik initialValues={initialValues} validationSchema={userSchema}>
       <Form className={css.form}>
         <div className={css.wrapper}>
           <div className={css.inputWrapper}>
