@@ -1,4 +1,3 @@
-// Contact.jsx
 import icon from "../../icons/icons.json";
 import css from "./Contact.module.css";
 import { deleteContact } from "../../redux/contactsSlice";

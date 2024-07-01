@@ -1,6 +1,4 @@
-// contactsSlice.js
-
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialContactsState = {
   items: [
@@ -11,22 +9,24 @@ const initialContactsState = {
   ],
 };
 
-export const addContact = createAction("contacts/addContact");
+const slice = createSlice({
+  name: "contacts",
+  initialState: initialContactsState,
+  reducers: {
+    addContact(state, action) {
+      state.items.push(action.payload);
+    },
+    deleteContact(state, action) {
+      const index = state.items.findIndex(
+        (contact) => contact.id === action.payload
+      );
+      state.items.splice(index, 1);
+    },
+  },
+});
 
-export const deleteContact = createAction("contacts/deleteContact");
+export const selectContacts = (state) => state.contacts.items;
 
-export const contactsReducer = createReducer(
-  initialContactsState,
-  (builder) => {
-    builder
-      .addCase("contacts/addContact", (state, action) => {
-        state.items.push(action.payload);
-      })
-      .addCase("contacts/deleteContact", (state, action) => {
-        const index = state.items.findIndex(
-          (contact) => contact.id === action.payload
-        );
-        state.items.splice(index, 1);
-      });
-  }
-);
+export const { addContact, deleteContact } = slice.actions;
+
+export default slice.reducer;

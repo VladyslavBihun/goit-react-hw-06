@@ -1,5 +1,3 @@
-// ContactForm.jsx
-
 import { useId } from "react";
 import { Form, Field, Formik } from "formik";
 import { ErrorMessage } from "formik";
@@ -31,13 +29,14 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, actions) => {
     const newContact = {
       id: nanoid(),
       name: values.username,
       number: values.phone,
     };
     dispatch(addContact(newContact));
+    actions.resetForm();
   };
 
   return (
