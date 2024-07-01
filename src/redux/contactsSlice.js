@@ -1,5 +1,7 @@
 // contactsSlice.js
 
+import { createAction, createReducer } from "@reduxjs/toolkit";
+
 const initialContactsState = {
   items: [
     { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -9,33 +11,22 @@ const initialContactsState = {
   ],
 };
 
-export const addContact = (contact) => {
-  return {
-    type: "contacts/addContact",
-    payload: contact,
-  };
-};
+export const addContact = createAction("contacts/addContact");
 
-export const deleteContact = (contactId) => {
-  return {
-    type: "contacts/deleteContact",
-    payload: contactId,
-  };
-};
+export const deleteContact = createAction("contacts/deleteContact");
 
-export const contactsReducer = (state = initialContactsState, action) => {
-  switch (action.type) {
-    case "contacts/addContact":
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
-    case "contacts/deleteContact":
-      return {
-        ...state,
-        items: state.items.filter((contact) => contact.id !== action.payload),
-      };
-    default:
-      return state;
+export const contactsReducer = createReducer(
+  initialContactsState,
+  (builder) => {
+    builder
+      .addCase("contacts/addContact", (state, action) => {
+        state.items.push(action.payload);
+      })
+      .addCase("contacts/deleteContact", (state, action) => {
+        const index = state.items.findIndex(
+          (contact) => contact.id === action.payload
+        );
+        state.items.splice(index, 1);
+      });
   }
-};
+);
